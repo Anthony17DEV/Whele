@@ -1,8 +1,5 @@
 import pygame
-import sys
-import os
 import numpy as np
-
 
 # Inicializa o Pygame
 pygame.init()
@@ -16,36 +13,27 @@ pygame.display.set_caption("Whele")
 # Função para carregar um vídeo e convertê-lo em uma lista de quadros
 fundo_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/depositphotos_324257814-stock-illustration-computer-graphic-of-pixel-game.jpg")
 
-
-# Lista de opções
-opcao_resolucao = ["800600", "1280720", "19201080"]
-opcao_dificuldade = ["FÁCIL", "MÉDIA", "DIFÍCIL"]
-opcao_som = ["LIGADO", "DESLIGADO"]
-
 # Outras configurações
 cor_botao = (255, 165, 0)  # Laranja
 tamanho_fonte = int(largura * 0.03)
 fonte = pygame.font.Font(None, tamanho_fonte)
 
+# Carrega a música de fundo
+pygame.mixer.init()
+pygame.mixer.music.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/sons/Y2meta.app - Batman - Stage 1 (128 kbps).mp3")
+
+# Toca a música de fundo em um loop infinito
+pygame.mixer.music.play(-1)
 
 # Carrega imagens dos botões
-botao_iniciar_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/Start (1).png")
-botao_configuracoes_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/configurações (1).png")
-botao_sair_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/Sair (1).png")
-
-# Carrega imagens dos títulos
-titulo_resolucao_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/Resolução.png")
-titulo_dificuldade_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/DIFICULDADE.png")
-titulo_som_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/SOM.png")
+botao_iniciar_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/Start.png")
+botao_configuracoes_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/configurações.png")
+botao_sair_img = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/Sair.png")
 
 # Função para criar botões
-def criar_botao(rect, imagem, cor_destaque):
+def criar_botao(rect, imagem):
     mouse_pos = pygame.mouse.get_pos()
     mouse_click = pygame.mouse.get_pressed()
-
-    # Ajuste para centralizar o botão
-    rect.x = (largura - rect.width) // 2
-    rect.y = rect.y  # Mantenha a posição Y original
 
     # Define a quantidade de movimento quando o mouse está sobre o botão
     movimento = 1
@@ -63,119 +51,104 @@ def criar_botao(rect, imagem, cor_destaque):
 
     return False
 
+def redimensionar_tela(nova_largura, nova_altura):
+    global largura, altura
+    largura, altura = nova_largura, nova_altura
+    tela = pygame.display.set_mode((largura, altura))
+
+def configurar_resolucao_800x600():
+    redimensionar_tela(800, 600)
+
+def configurar_resolucao_1280x720():
+    redimensionar_tela(1280, 720)
+
+def configurar_resolucao_1920x1080():
+    redimensionar_tela(1920, 1080)
+
+tela_atual = "inicial"
+
 # Loop principal
 rodando = True
-indice_frame = 0  # Índice para controlar os frames do fundo
-configuracoes_abertas = False  # Adiciona essa linha antes do loop principal
+indice_frame = 0
+configuracoes_abertas = False
 clock = pygame.time.Clock()
+
 while rodando:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             rodando = False
 
-    # Desenha a imagem de fundo
     tela.blit(fundo_img, (0, 0))
 
-    # Criação de botões
     largura_botao, altura_botao = largura * 0.2, altura * 0.1
 
-    # Botão Iniciar
+    # Botão iniciar
     iniciar_rect = pygame.Rect((largura - largura_botao) // 2, altura * 0.2, largura_botao, altura_botao)
-    if criar_botao(iniciar_rect, botao_iniciar_img, (255, 200, 0)):
-        # Ação ao clicar em Iniciar (por enquanto, apenas imprime uma mensagem)
+    if tela_atual == "inicial" and criar_botao(iniciar_rect, botao_iniciar_img):
+        # Para a música de fundo ao clicar em "Iniciar"
+        pygame.mixer.music.stop()
         print("Iniciar jogo!")
 
     # Botão Configurações
     configuracoes_rect = pygame.Rect((largura - largura_botao) // 2, altura * 0.35, largura_botao, altura_botao)
-    if criar_botao(configuracoes_rect, botao_configuracoes_img, (255, 200, 0)):
-        # Ação ao clicar em Configurações (abrir tela de configurações)
-        configuracoes_abertas = True
-        while configuracoes_abertas:
-            for evento_config in pygame.event.get():
-                if evento_config.type == pygame.QUIT:
-                    configuracoes_abertas = False
-
-            # Seção de desenho e interação na tela de configurações
-            tela.blit(titulo_resolucao_img, (largura * 0.1, altura * 0.1))
-            # Adiciona botões para escolher a resolução
-            for i, opcao_resolucao in enumerate(opcao_resolucao):
-                # Gera o caminho da imagem com base na opção de resolução
-                nome_arquivo = ''.join(c if c.isalnum() or c.isspace() else '' for c in opcao_resolucao)
-
-                # Verifica se o nome do arquivo não está vazio
-                if nome_arquivo:
-                    caminho_imagem_resolucao = os.path.join(
-                        "C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens", f"{nome_arquivo}.png")
-
-                    # Carrega a imagem se ela existir
-                    try:
-                        img_resolucao = pygame.image.load(caminho_imagem_resolucao)
-                    except pygame.error:
-                        print(f"Erro ao carregar a imagem: {caminho_imagem_resolucao}")
-                        continue
-
-                    rect_opcao_resolucao = pygame.Rect(
-                        largura * 0.1 + (largura * 0.3) * i,
-                        altura * 0.2,
-                        largura * 0.25,
-                        altura * 0.1
-                    )
-
-                    if criar_botao(rect_opcao_resolucao, img_resolucao, (255, 200, 0)):
-                        largura, altura = map(int, opcao_resolucao.split('X'))
-                        tela = pygame.display.set_mode((largura, altura))
-                        print(f"Tamanho da tela alterado para {largura}x{altura}")
-
-            tela.blit(titulo_dificuldade_img, (largura * 0.1, altura * 0.4))
-            # Adiciona botões para escolher a dificuldade
-            for i, opcao_dificuldade in enumerate(opcao_dificuldade):
-                caminho_imagem_dificuldade = f"C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/{opcao_dificuldade}.png"
-                img_dificuldade = pygame.image.load(caminho_imagem_dificuldade)
-
-                rect_opcao_dificuldade = pygame.Rect(
-                    largura * 0.1 + (largura * 0.3) * i,
-                    altura * 0.5,
-                    largura * 0.25,
-                    altura * 0.1
-                )
-
-                if criar_botao(rect_opcao_dificuldade, img_dificuldade, (255, 200, 0)):
-                    print(f"Dificuldade alterada para {opcao_dificuldade}")
-
-            tela.blit(titulo_som_img, (largura * 0.1, altura * 0.7))
-            # Adiciona botões para ligar/desligar o som
-            for i, opcao_som in enumerate(opcao_som):
-                caminho_imagem_som = f"C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/{opcao_som}.png"
-                img_som = pygame.image.load(caminho_imagem_som)
-
-                rect_opcao_som = pygame.Rect(
-                    largura * 0.1 + (largura * 0.3) * i,
-                    altura * 0.75,
-                    largura * 0.25,
-                    altura * 0.1
-                )
-
-                if criar_botao(rect_opcao_som, img_som, (255, 200, 0)):
-                    print(f"Som alterado para {opcao_som}")
-
-            voltar_rect = pygame.Rect(largura * 0.1, altura * 0.9, largura_botao, altura_botao)
-            if criar_botao(voltar_rect, botao_sair_img, (255, 200, 0)):
-                configuracoes_abertas = False
-
-            pygame.display.flip()
+    if tela_atual == "inicial" and criar_botao(configuracoes_rect, botao_configuracoes_img):
+        tela_atual = "configuracoes"
+        print("Ir para configurações")
 
     # Botão Sair
     sair_rect = pygame.Rect((largura - largura_botao) // 2, altura * 0.5, largura_botao, altura_botao)
-    if criar_botao(sair_rect, botao_sair_img, (255, 200, 0)):
+    if tela_atual == "inicial" and criar_botao(sair_rect, botao_sair_img):
         # Ação ao clicar em Sair (por enquanto, apenas fecha o jogo)
         rodando = False
 
+    elif tela_atual == "configuracoes":
+        tela.blit(fundo_img, (0, 0))  # Mantém a imagem de fundo
+        imagem_resolucao = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/Resolução.jpg")
+        largura_imagem, altura_imagem = imagem_resolucao.get_size()
+        tela.blit(imagem_resolucao, ((largura - largura_imagem) // 2, altura * 0.1))
+
+        # Adiciona os botões
+        botao_resolucao_800x600 = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/800x600.png")
+        botao_resolucao_1280x720 = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/1280x720.png")
+        botao_resolucao_1920x1080 = pygame.image.load("C:/Users/antho/Desktop/Meus programas/pythonProject3/imagens/1920x1080.png")
+
+        largura_botao, altura_botao = largura * 0.1, altura * 0.05
+        espacamento = largura * 0.2
+
+        # Posições dos botões em relação à imagem de resolução
+        x_botao_800x600 = ((largura - largura_botao * 3 - espacamento * 2) // 2) + ((largura_imagem - largura_botao * 0.77 - espacamento * 2) // 2)
+        x_botao_1280x720 = x_botao_800x600 + largura_botao + espacamento
+        x_botao_1920x1080 = x_botao_1280x720 + largura_botao + espacamento
+        y_botao = altura * 0.3
+
+        # Blit dos botões
+        tela.blit(botao_resolucao_800x600, (x_botao_800x600, y_botao))
+        tela.blit(botao_resolucao_1280x720, (x_botao_1280x720, y_botao))
+        tela.blit(botao_resolucao_1920x1080, (x_botao_1920x1080, y_botao))
+
+        # Tratamento de eventos para os botões
+        for evento in pygame.event.get():
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                # Verifica se o clique foi nos botões
+                if x_botao_800x600 <= mouse_pos[0] <= x_botao_800x600 + largura_botao and \
+                        y_botao <= mouse_pos[1] <= y_botao + altura_botao:
+                    configurar_resolucao_800x600()
+                    print("Resolução alterada para 800x600")
+
+                elif x_botao_1280x720 <= mouse_pos[0] <= x_botao_1280x720 + largura_botao and \
+                        y_botao <= mouse_pos[1] <= y_botao + altura_botao:
+                    configurar_resolucao_1280x720()
+                    print("Resolução alterada para 1280x720")
+
+                elif x_botao_1920x1080 <= mouse_pos[0] <= x_botao_1920x1080 + largura_botao and \
+                        y_botao <= mouse_pos[1] <= y_botao + altura_botao:
+                    configurar_resolucao_1920x1080()
+                    print("Resolução alterada para 1920x1080")
+
     # Atualiza a tela
     pygame.display.flip()
-    clock.tick(30)  # Ajuste a taxa de quadros conforme necessár
-
-    if configuracoes_abertas:
-        pygame.display.set_mode((largura, altura))  # Mova esta linha para fora do loop de configurações
+    clock.tick(30)
 
 # Finaliza o Pygame
 pygame.quit()
