@@ -1,0 +1,167 @@
+
+skeleton.png
+size: 3301,813
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Bengala
+  rotate: true
+  xy: 2328, 605
+  size: 206, 971
+  orig: 206, 971
+  offset: 0, 0
+  index: -1
+Boca e Olhos
+  rotate: false
+  xy: 2482, 265
+  size: 428, 338
+  orig: 428, 338
+  offset: 0, 0
+  index: -1
+Nariz
+  rotate: true
+  xy: 2179, 3
+  size: 156, 171
+  orig: 156, 171
+  offset: 0, 0
+  index: -1
+Perna Direito
+  rotate: false
+  xy: 1524, 158
+  size: 407, 653
+  orig: 407, 653
+  offset: 0, 0
+  index: -1
+Perna esqueda
+  rotate: false
+  xy: 2068, 240
+  size: 242, 571
+  orig: 242, 571
+  offset: 0, 0
+  index: -1
+Pé Direito
+  rotate: true
+  xy: 2312, 251
+  size: 352, 168
+  orig: 352, 168
+  offset: 0, 0
+  index: -1
+Pé esquerdo
+  rotate: false
+  xy: 826, 15
+  size: 398, 105
+  orig: 398, 105
+  offset: 0, 0
+  index: -1
+Sobrancelha direita
+  rotate: true
+  xy: 2912, 58
+  size: 255, 168
+  orig: 255, 168
+  offset: 0, 0
+  index: -1
+Sobrancelha esquerda
+  rotate: true
+  xy: 3082, 72
+  size: 241, 170
+  orig: 241, 170
+  offset: 0, 0
+  index: -1
+antebraço direito
+  rotate: true
+  xy: 2611, 6
+  size: 257, 299
+  orig: 257, 299
+  offset: 0, 0
+  index: -1
+antebraço esquerdo
+  rotate: false
+  xy: 1817, 12
+  size: 360, 144
+  orig: 360, 144
+  offset: 0, 0
+  index: -1
+boca
+  rotate: false
+  xy: 2068, 161
+  size: 258, 77
+  orig: 258, 77
+  offset: 0, 0
+  index: -1
+braço direito
+  rotate: false
+  xy: 2912, 315
+  size: 383, 288
+  orig: 383, 288
+  offset: 0, 0
+  index: -1
+braço esquerso
+  rotate: true
+  xy: 705, 2
+  size: 118, 119
+  orig: 118, 119
+  offset: 0, 0
+  index: -1
+mão direita
+  rotate: false
+  xy: 2473, 4
+  size: 136, 245
+  orig: 136, 245
+  offset: 0, 0
+  index: -1
+mão esquerda
+  rotate: false
+  xy: 1566, 11
+  size: 249, 145
+  orig: 249, 145
+  offset: 0, 0
+  index: -1
+olho direito
+  rotate: false
+  xy: 1396, 33
+  size: 168, 87
+  orig: 168, 87
+  offset: 0, 0
+  index: -1
+olho esquerdo
+  rotate: false
+  xy: 2328, 162
+  size: 143, 87
+  orig: 143, 87
+  offset: 0, 0
+  index: -1
+pálpebra direita
+  rotate: false
+  xy: 1226, 31
+  size: 168, 89
+  orig: 168, 89
+  offset: 0, 0
+  index: -1
+pálpebra esquerda
+  rotate: true
+  xy: 2352, 17
+  size: 143, 87
+  orig: 143, 87
+  offset: 0, 0
+  index: -1
+rosto
+  rotate: true
+  xy: 2, 14
+  size: 797, 701
+  orig: 797, 701
+  offset: 0, 0
+  index: -1
+torso
+  rotate: true
+  xy: 705, 122
+  size: 689, 817
+  orig: 689, 817
+  offset: 0, 0
+  index: -1
+óculos
+  rotate: true
+  xy: 1933, 216
+  size: 595, 133
+  orig: 595, 133
+  offset: 0, 0
+  index: -1

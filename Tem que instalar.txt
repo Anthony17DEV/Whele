@@ -1,0 +1,1 @@
+Tem que instalar o ImageMagick e dps executar o (for %i in (*.jpg *.png) do magick "%i" -strip "%i") pra poder converter as imagens em RGB e o jogo não ficar aparecendo erro chato no log
